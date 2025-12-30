@@ -1,4 +1,4 @@
-package fr.azures04.mods.multiauth.config;
+package fr.azures04.mods.multiauth.pojo;
 
 import java.security.PublicKey;
 

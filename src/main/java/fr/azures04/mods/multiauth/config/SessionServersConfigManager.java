@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -13,7 +14,7 @@ import com.google.gson.GsonBuilder;
 
 import fr.azures04.mods.multiauth.Constants;
 import fr.azures04.mods.multiauth.MultiAuth;
-import scala.actors.threadpool.Arrays;
+import fr.azures04.mods.multiauth.pojo.SessionServersConfig;
 
 public class SessionServersConfigManager {
 	

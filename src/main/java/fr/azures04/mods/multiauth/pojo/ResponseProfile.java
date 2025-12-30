@@ -1,4 +1,4 @@
-package fr.azures04.mods.multiauth.services.objects;
+package fr.azures04.mods.multiauth.pojo;
 
 import java.util.List;
 import java.util.UUID;

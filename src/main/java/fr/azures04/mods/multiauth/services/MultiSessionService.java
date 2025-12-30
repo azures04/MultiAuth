@@ -17,10 +17,10 @@ import com.mojang.util.UUIDTypeAdapter;
 import fr.azures04.mods.multiauth.Constants;
 import fr.azures04.mods.multiauth.Constants.Endpoints;
 import fr.azures04.mods.multiauth.MultiAuth;
-import fr.azures04.mods.multiauth.config.SessionServersConfig;
 import fr.azures04.mods.multiauth.helpers.RequestHelper;
-import fr.azures04.mods.multiauth.services.objects.ResponseProfile;
-import fr.azures04.mods.multiauth.services.objects.ResponseProfile.ResponseProperty;
+import fr.azures04.mods.multiauth.pojo.ResponseProfile;
+import fr.azures04.mods.multiauth.pojo.SessionServersConfig;
+import fr.azures04.mods.multiauth.pojo.ResponseProfile.ResponseProperty;
 
 public class MultiSessionService extends YggdrasilMinecraftSessionService {
 
@@ -43,7 +43,7 @@ public class MultiSessionService extends YggdrasilMinecraftSessionService {
 				}
 			} else {
 				player = hasJoinedServerOn(sessionServers, user.getName(), serverId);
-				MultiAuth.logger.log(Level.INFO, "[MultiAuth] Succesfully auth session on : " + user.getName() + "@" + sessionServers.getUrl());
+				MultiAuth.logger.log(Level.INFO, "[MultiAuth] Succesfully auth session on : " + user.getName() + "@" + sessionServers.getName());
 			}
 			if (player != null) {
 				MultiAuth.logger.log(Level.INFO, "[MultiAuth] " + user.getName() + "@" + sessionServers.getName() + " authenticated succesfully");

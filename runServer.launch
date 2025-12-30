@@ -3,7 +3,7 @@
   <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="MultiAuth"/>
   <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="net.minecraftforge.legacydev.MainServer"/>
   <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dforge.logging.console.level=debug -Dforge.logging.markers=SCAN,REGISTRIES,REGISTRYDUMP"/>
-  <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value=""/>
+  <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="nogui"/>
   <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="C:\Users\Megaport\Documents\Github\MultiAuth\run"/>
   <mapAttribute key="org.eclipse.debug.core.environmentVariables">
     <mapEntry key="MCP_TO_SRG" value="C:\Users\Megaport\Documents\Github\MultiAuth\build\createSrgToMcp\output.srg"/>
