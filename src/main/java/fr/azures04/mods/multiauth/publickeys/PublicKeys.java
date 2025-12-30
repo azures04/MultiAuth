@@ -34,8 +34,6 @@ public class PublicKeys {
 				String publicKeysJsonResponse = RequestHelper.get(publicKeysEndpoint);
 				YggdrasilKeysResponse publicKeys = GSON.fromJson(publicKeysJsonResponse, YggdrasilKeysResponse.class);
 				
-				
-				
 				if (publicKeys != null && publicKeys.profilePropertyKeys != null && !publicKeys.profilePropertyKeys.isEmpty()) {
 					String publicKey = publicKeys.profilePropertyKeys.get(0).publicKey;
 					server.loadedPublicKey = decode(publicKey);
