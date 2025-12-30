@@ -1,0 +1,16 @@
+[
+	{
+		"modid": "multiauth",
+		"name": "MultiAuth",
+		"description": "A server-side mod that allow to use muliple auth source, exactly like MultiYggdrasil, for older versions.",
+		"version": "${version}",
+		"mcversion": "${mcversion}",
+		"url": "",
+		"updateUrl": "",
+		"authorList": ["azures04"],
+		"credits": "wiki.vg for documentaing mojang api",
+		"logoFile": "",
+		"screenshots": [],
+		"dependencies": []
+	}
+]
