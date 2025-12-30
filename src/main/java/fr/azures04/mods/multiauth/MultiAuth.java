@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import fr.azures04.mods.multiauth.config.SessionServersConfigManager;
-import fr.azures04.mods.multiauth.publickeys.PublicKeys;
+import fr.azures04.mods.multiauth.helpers.PublicKeysHelper;
 import fr.azures04.mods.multiauth.services.MultiSessionService;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.Mod;
@@ -31,7 +31,7 @@ public class MultiAuth {
         config.load();
         
         new Thread(() -> {
-        	PublicKeys.fetchPublicKeys(config.getServers());
+        	PublicKeysHelper.fetchPublicKeys(config.getServers());
         }).start();
     }
 

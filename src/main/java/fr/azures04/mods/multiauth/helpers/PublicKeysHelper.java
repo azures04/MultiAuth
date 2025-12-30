@@ -1,7 +1,8 @@
-package fr.azures04.mods.multiauth.publickeys;
+package fr.azures04.mods.multiauth.helpers;
 
 import java.security.KeyFactory;
 import java.security.PublicKey;
+import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.List;
 
@@ -14,11 +15,10 @@ import com.google.gson.GsonBuilder;
 import fr.azures04.mods.multiauth.Constants;
 import fr.azures04.mods.multiauth.Constants.Endpoints;
 import fr.azures04.mods.multiauth.MultiAuth;
-import fr.azures04.mods.multiauth.helpers.RequestHelper;
 import fr.azures04.mods.multiauth.pojo.SessionServersConfig;
 import fr.azures04.mods.multiauth.pojo.YggdrasilKeysResponse;
 
-public class PublicKeys {
+public class PublicKeysHelper {
 	
 	private static final Gson GSON = new GsonBuilder().create();
 	
@@ -65,4 +65,15 @@ public class PublicKeys {
 		return keyFectory.generatePublic(keySpec);
 	}
 	
+	public static boolean verifySignature(String data, String signature, PublicKey key) {
+	    try {
+	        Signature sig = Signature.getInstance("SHA1withRSA");
+	        sig.initVerify(key);
+	        sig.update(data.getBytes("UTF-8"));
+	        return sig.verify(org.apache.commons.codec.binary.Base64.decodeBase64(signature));
+	    } catch (Exception e) {
+	        MultiAuth.logger.error("[MultiAuth] Signature verification failed", e);
+	        return false;
+	    }
+	}
 }

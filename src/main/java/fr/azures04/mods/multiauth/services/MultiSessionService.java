@@ -1,6 +1,7 @@
 package fr.azures04.mods.multiauth.services;
 
 import java.net.InetAddress;
+import java.security.PublicKey;
 import java.util.UUID;
 
 import org.apache.logging.log4j.Level;
@@ -17,6 +18,7 @@ import com.mojang.util.UUIDTypeAdapter;
 import fr.azures04.mods.multiauth.Constants;
 import fr.azures04.mods.multiauth.Constants.Endpoints;
 import fr.azures04.mods.multiauth.MultiAuth;
+import fr.azures04.mods.multiauth.helpers.PublicKeysHelper;
 import fr.azures04.mods.multiauth.helpers.RequestHelper;
 import fr.azures04.mods.multiauth.pojo.ResponseProfile;
 import fr.azures04.mods.multiauth.pojo.SessionServersConfig;
@@ -68,6 +70,12 @@ public class MultiSessionService extends YggdrasilMinecraftSessionService {
 				GameProfile profile = new GameProfile(responseProfile.getUUID(), responseProfile.name);
 				if (responseProfile.properties != null) {
 				    for (ResponseProperty prop : responseProfile.properties) {
+				    	if (prop.signature != null && !prop.signature.isEmpty()) {
+			                if (!PublicKeysHelper.verifySignature(prop.value, prop.signature, server.loadedPublicKey)) {
+			                    MultiAuth.logger.error("[MultiAuth] Invalid signature detected for property '" + prop.name + "' from " + server.getName());
+			                    return null;
+			                }
+			            }
 				        profile.getProperties().put(prop.name, new Property(prop.name, prop.value, prop.signature));
 				    }
 				}
