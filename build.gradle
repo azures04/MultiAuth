@@ -1,20 +1,28 @@
 buildscript {
     repositories {
         maven { url = "https://maven.minecraftforge.net/" }
+        maven { url = "https://plugins.gradle.org/m2/" }
         mavenCentral()
     }
     dependencies {
         classpath "net.minecraftforge.gradle:ForgeGradle:3.+"
+        classpath "com.github.jengelman.gradle.plugins:shadow:4.0.4"
     }
 }
-        
+    
+apply plugin: "com.github.johnrengelman.shadow"    
 apply plugin: "net.minecraftforge.gradle"
 apply plugin: "eclipse"
 apply plugin: "maven-publish"
 
-version = "0.0.1"
+version = "0.0.2"
 group = "fr.azures04.mods.multiauth"
 archivesBaseName = "multiauth"
+
+configurations {
+    embed
+    compile.extendsFrom embed
+}
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = "1.8"
 
@@ -37,6 +45,7 @@ minecraft {
 
 dependencies {
     minecraft "net.minecraftforge:forge:1.12.2-14.23.5.2864"
+    embed "com.googlecode.json-simple:json-simple:1.1.1"
 }
 
 jar {
@@ -68,8 +77,17 @@ publishing {
     }
 }
 
-sourceSets.each {
-    def dir = layout.buildDirectory.file("sourcesSets/$it.name").get().asFile
-    it.output.resourcesDir = dir
-    it.java.outputDir = dir
+
+shadowJar {
+    classifier = ""
+    configurations = [project.configurations.embed]
+    
+    relocate "org.json.simple", "fr.azures04.shadowjar.org.json.simple"
 }
+
+reobf {
+    shadowJar { }
+}
+
+jar.finalizedBy("reobfJar")
+build.dependsOn shadowJar

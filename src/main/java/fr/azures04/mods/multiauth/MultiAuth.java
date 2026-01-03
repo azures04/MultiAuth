@@ -7,7 +7,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
-import fr.azures04.mods.multiauth.config.SessionServersConfigManager;
+import fr.azures04.mods.multiauth.helpers.CacheHelper;
+import fr.azures04.mods.multiauth.helpers.ConfigHelper;
 import fr.azures04.mods.multiauth.helpers.PublicKeysHelper;
 import fr.azures04.mods.multiauth.services.MultiSessionService;
 import net.minecraft.server.MinecraftServer;
@@ -15,28 +16,36 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent;
 
-@Mod(modid = Constants.MODID, name =Constants.NAME, version = Constants.VERSION, serverSideOnly = true, acceptableRemoteVersions = "*")
+@Mod(modid = Constants.MODID, name = Constants.NAME, version = Constants.VERSION)
 public class MultiAuth {
 
     public static Logger logger;
-    public static SessionServersConfigManager config;
-
+    public static ConfigHelper config;
+    public static CacheHelper cache;
+    
     @EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
-        config = new SessionServersConfigManager(event.getModConfigurationDirectory());
+        config = new ConfigHelper(event.getModConfigurationDirectory());
         config.load();
-        
-        new Thread(() -> {
-        	PublicKeysHelper.fetchPublicKeys(config.getServers());
-        }).start();
+        cache = new CacheHelper(event.getModConfigurationDirectory());
+        cache.load();
+        PublicKeysHelper.fetchPublicKeys();
+        logger.log(Level.INFO, "[MultiAuth] FMLPreInitializationEvent done");
     }
 
     @EventHandler
     public void onInit(FMLInitializationEvent event) {
+        logger.log(Level.INFO, "[MultiAuth] FMLInitializationEvent done");
+    }
+    
+    @EventHandler
+    public void onPostInit(FMLPostInitializationEvent event) {
+        logger.log(Level.INFO, "[MultiAuth] FMLPostInitializationEvent done");
     }
     
     @EventHandler
@@ -54,4 +63,5 @@ public class MultiAuth {
 			e.printStackTrace();
 		}
     }
+    
 }
